@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Plans</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .subscription-plan {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        .subscription-plan:hover {
+            transform: translateY(-10px);
+        }
+        .plan-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 36px;
+            color: #007BFF;
+            margin-bottom: 20px;
+        }
+        .features {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .features li {
+            margin: 10px 0;
+        }
+        .subscribe-btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .subscribe-btn:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        #emailInput {
+            margin: 10px 0;
+            padding: 8px;
+            width: 90%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<div class="plans-container">
+    <!-- Basic Plan -->
+    <div class="subscription-plan">
+        <div class="plan-title">Basic Plan</div>
+        <div class="price">$9.99/month</div>
+        <ul class="features">
+            <li>Unlimited Access</li>
+            <li>10GB Storage</li>
+            <li>Email Support</li>
+        </ul>
+        <button class="subscribe-btn" onclick="selectPlan('Basic', 9.99)">Select Plan</button>
+    </div>
+
+    <!-- Standard Plan -->
+    <div class="subscription-plan">
+        <div class="plan-title">Standard Plan</div>
+        <div class="price">$19.99/month</div>
+        <ul class="features">
+            <li>Unlimited Access</li>
+            <li>50GB Storage</li>
+            <li>Priority Email Support</li>
+        </ul>
+        <button class="subscribe-btn" onclick="selectPlan('Standard', 19.99)">Select Plan</button>
+    </div>
+
+    <!-- Premium Plan -->
+    <div class="subscription-plan">
+        <div class="plan-title">Premium Plan</div>
+        <div class="price">$29.99/month</div>
+        <ul class="features">
+            <li>Unlimited Access</li>
+            <li>200GB Storage</li>
+            <li>24/7 Phone & Email Support</li>
+        </ul>
+        <button class="subscribe-btn" onclick="selectPlan('Premium', 29.99)">Select Plan</button>
+    </div>
+</div>
+
+<!-- Email Input and Confirmation -->
+<div class="message" id="message"></div>
+<div class="message" id="emailSection" style="display: none;">
+    <p>Please enter your email to subscribe to the <span id="planName"></span> plan for <span id="planPrice"></span>/month:</p>
+    <input type="email" id="emailInput" placeholder="Enter your email">
+    <button class="subscribe-btn" onclick="subscribeToPlan()">Subscribe</button>
+</div>
+
+<script>
+    // Variables to store selected plan details
+    let selectedPlan = "";
+    let selectedPrice = 0;
+
+    // Function to select a plan
+    function selectPlan(plan, price) {
+        // Update global variables with the selected plan and price
+        selectedPlan = plan;
+        selectedPrice = price;
+
+        // Update the email section with the selected plan details
+        document.getElementById('planName').innerText = plan;
+        document.getElementById('planPrice').innerText = `$${price}`;
+        document.getElementById('emailSection').style.display = "block"; // Show the email section
+    }
+
+    // Function to validate the email format using regex
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email validation pattern
+        return re.test(String(email).toLowerCase());
+    }
+
+    // Function to handle the subscription process
+    function subscribeToPlan() {
+        const email = document.getElementById('emailInput').value; // Get the email input value
+
+        // Check if the email is valid
+        if (validateEmail(email)) {
+            // Display a confirmation message
+            document.getElementById('message').innerText = `Thank you for subscribing to the ${selectedPlan} Plan for $${selectedPrice}/month. A confirmation email has been sent to ${email}.`;
+            document.getElementById('emailSection').style.display = "none"; // Hide the email section after successful subscription
+        } else {
+            // Alert the user if the email is invalid
+            alert("Please enter a valid email address.");
+        }
+    }
+</script>
+
+</body>
+</html>
